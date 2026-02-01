@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advaith Banigandlapati | Cybersecurity Portfolio</title>
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --bg-card: #141829;
+            
+            --accent-primary: #00ff41;
+            --accent-secondary: #00d9ff;
+            --accent-danger: #ff0055;
+            
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            
+            --border-color: #27272a;
+            --glow-green: rgba(0, 255, 65, 0.3);
+            --glow-cyan: rgba(0, 217, 255, 0.3);
+        }
+
+        /* ===== BODY BASE STYLES ===== */
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== SCROLL PROGRESS BAR ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            z-index: 10000;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px var(--glow-green);
+        }
+
+        /* ===== SCROLL TO TOP BUTTON ===== */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 4px 15px var(--glow-green);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px var(--glow-green);
+        }
+
+        /* ===== ANIMATED GRID BACKGROUND ===== */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* ===== SCANLINE EFFECT ===== */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                transparent 50%,
+                rgba(0, 255, 65, 0.02) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== NAVIGATION BAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'Space Mono', monospace;
+            text-shadow: 0 0 20px var(--glow-green);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 30px var(--glow-green);
+            transform: scale(1.05);
+        }
+
+        .logo span {
+            color: var(--accent-secondary);
+        }
+
+        /* ===== NAVIGATION LINKS ===== */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent-primary);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ===== GLITCH EFFECT ===== */
+        .glitch {
+            color: var(--accent-primary);
+            text-shadow: 0 0 20px var(--glow-green);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            40% { transform: translateX(2px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* ===== ACHIEVEMENTS LIST ===== */
+        .achievements {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 4px;
+            opacity: 0;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .achievement-item:nth-child(1) { animation-delay: 0.1s; }
+        .achievement-item:nth-child(2) { animation-delay: 0.2s; }
+        .achievement-item:nth-child(3) { animation-delay: 0.3s; }
+        .achievement-item:nth-child(4) { animation-delay: 0.4s; }
+        .achievement-item:nth-child(5) { animation-delay: 0.5s; }
+        .achievement-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .achievement-item:hover {
+            background: rgba(0, 255, 65, 0.05);
+            transform: translateX(5px);
+        }
+
+        .achievement-icon {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-item:hover .achievement-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        /* ===== CALL-TO-ACTION BUTTONS ===== */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--glow-green);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--glow-green);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ===== TERMINAL BOX ===== */
+        .terminal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .terminal-header {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .terminal-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.1s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.3s; }
+        .terminal-line:nth-child(3) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 0.7s; }
+        .terminal-line:nth-child(5) { animation-delay: 0.9s; }
+        .terminal-line:nth-child(6) { animation-delay: 1.1s; }
+        .terminal-line:nth-child(7) { animation-delay: 1.3s; }
+        .terminal-line:nth-child(8) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(9) { animation-delay: 1.7s; }
+        .terminal-line:nth-child(10) { animation-delay: 1.9s; }
+
+        .terminal-prompt {
+            color: var(--accent-primary);
+        }
+
+        .terminal-command {
+            color: var(--accent-secondary);
+        }
+
+        .terminal-output {
+            color: var(--text-secondary);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--accent-primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ===== SECTION STYLING ===== */
+        section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .section-title span {
+            color: var(--accent-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ===== PROJECTS GRID ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 50px rgba(0, 255, 65, 0.15);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .project-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-planned {
+            background: rgba(255, 191, 0, 0.1);
+            color: #ffbf00;
+            border: 1px solid #ffbf00;
+        }
+
+        .status-progress {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent-secondary);
+            border: 1px solid var(--accent-secondary);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--accent-secondary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-secondary);
+            transition: width 0.3s ease;
+        }
+
+        .project-link:hover::after {
+            width: 100%;
+        }
+
+        .project-link:hover {
+            color: var(--accent-primary);
+        }
+
+        /* ===== SKILLS SECTION ===== */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .skill-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.1);
+        }
+
+        .skill-category-title {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .skill-level {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 3px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            width: 0;
+        }
+
+        .skill-progress.animate {
+            width: var(--target-width);
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* ===== VOLUNTEER SECTION ===== */
+        .volunteer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .volunteer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .volunteer-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .volunteer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .volunteer-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .volunteer-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 15px 50px rgba(0, 217, 255, 0.15);
+        }
+
+        .volunteer-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .volunteer-card:hover .volunteer-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .volunteer-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .volunteer-card:hover .volunteer-title {
+            color: var(--accent-primary);
+        }
+
+        .volunteer-org {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .volunteer-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(odd) {
+            transform: translateX(50px);
+        }
+
+        .timeline-item:nth-child(odd).visible {
+            transform: translateX(0);
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            width: calc(50% - 40px);
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.1);
+            transform: scale(1.02);
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-primary);
+            color: var(--accent-primary);
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--accent-primary);
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-date {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .timeline-highlight {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            min-width: 200px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-link.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 255, 65, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-link:hover .contact-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            color: var(--accent-secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 6rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-secondary);
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 60px !important;
+            }
+
+            .timeline-date {
+                left: 30px;
+                transform: translateX(0);
+            }
+
+            .timeline-item:hover .timeline-date {
+                transform: translateX(0) scale(1.1);
+            }
+
+            .projects-grid,
+            .volunteer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links {
+                font-size: 0.8rem;
+                gap: 0.8rem;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .scroll-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-to-top" aria-label="Scroll to top">↑</button>
+
+    <!-- Background Effects -->
+    <div class="grid-background"></div>
+    <div class="scanline"></div>
+
+    <!-- ===== NAVIGATION BAR ===== -->
+    <nav>
+        <div class="container">
+            <div class="logo">&lt;/&gt; <span>ADVAITH_BANIGANDLAPATI</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#volunteer">Volunteer</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>
+                        Securing the<br>
+                        <span class="glitch">Digital Frontier</span>
+                    </h1>
+                    <p class="subtitle">
+                        13-year-old cybersecurity competitor, programmer, and future CyberSecurity Lawyer
+                    </p>
+                    
+                    <div class="achievements">
+                        <div class="achievement-item">
+                            <span class="achievement-icon">🥉</span>
+                            <span><strong>3rd Place</strong> New Jersey CyberPatriot Competition</span>
+                        </div>
+                        <div class="achievement-item">
+                            <span class="achievement-icon">🤖</span>
+                            <span><strong>FTC Software Developer</strong> on Cool name Pending #30439</span>
+                        </div>
+                        <div class="achievement-item">
+                            <span class="achievement-icon">💻</span>
+                            <span><strong>Advanced C++ Developer</strong> learning Python & Java</span>
+                        </div>
+                        <div class="achievement-item">
+                            <span class="achievement-icon">🎓</span>
+                            <span><strong>CyberPatriot Advanced Camp</strong> participant (incoming)</span>
+                        </div>
+                        <div class="achievement-item">
+                            <span class="achievement-icon">🌐</span>
+                            <span><strong>Network Security</strong> intermediate expertise</span>
+                        </div>
+                        <div class="achievement-item">
+                            <span class="achievement-icon">🤝</span>
+                            <span><strong>Active Volunteer</strong> giving to the community</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> <span class="terminal-command">whoami</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">13-year-old aspiring cybersecurity professional</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> <span class="terminal-command">cat achievements.txt</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">• CyberPatriot: 3rd in NJ State</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">• FTC Robotics: Software Role</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">• Languages: C++, Python, Java</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">• Network Security: Intermediate</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> <span class="terminal-command">echo $MISSION</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">"Protecting digital systems, one line of code at a time"</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> <span class="cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured <span>Projects</span></h2>
+                <p class="section-subtitle">Building tools and solutions for real-world security challenges</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🛡️</span>
+                        <span class="project-status status-progress">In Progress</span>
+                    </div>
+                    <h3 class="project-title">CyberPatriot Security Toolkit</h3>
+                    <p class="project-description">
+                        Automated security hardening scripts based on competition experience. Includes password policy enforcement, 
+                        unauthorized user detection, and security audit report generation.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag">Windows</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">On Github Soon →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🎣</span>
+                        <span class="project-status status-planned">Planned</span>
+                    </div>
+                    <h3 class="project-title">Phishing Email Analyzer</h3>
+                    <p class="project-description">
+                        AI-powered tool to detect phishing attempts by analyzing email headers, URLs, and suspicious patterns. 
+                        Features real-time threat scoring and educational feedback.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">Regex</span>
+                        <span class="tech-tag">Email Parsing</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Coming Soon →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">📡</span>
+                        <span class="project-status status-planned">Planned</span>
+                    </div>
+                    <h3 class="project-title">Network Security Monitor</h3>
+                    <p class="project-description">
+                        Lightweight network monitoring tool with C++ packet capture engine and Python UI. 
+                        Detects unusual traffic patterns and provides real-time security alerts.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Scapy</span>
+                        <span class="tech-tag">Networking</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Spec Doc Soon →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🤖</span>
+                        <span class="project-status status-planned">Planned</span>
+                    </div>
+                    <h3 class="project-title">FTC Robotics Security Audit</h3>
+                    <p class="project-description">
+                        Comprehensive security review of FTC robot code. Analyzes potential vulnerabilities in competition software 
+                        and creates secure coding guidelines for robotics teams. Based on FIRST principles and the Control Award
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Security Analysis</span>
+                        <span class="tech-tag">Documentation</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Paper in the making →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🔐</span>
+                        <span class="project-status status-planned">Planned</span>
+                    </div>
+                    <h3 class="project-title">Password Strength Analyzer</h3>
+                    <p class="project-description">
+                        Interactive web tool that educates users about password security. Features real-time strength analysis, 
+                        crack-time estimates, and NIST-compliant recommendations.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">Cryptography</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Live Demo Soon →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🚩</span>
+                        <span class="project-status status-progress">In Progress</span>
+                    </div>
+                    <h3 class="project-title">CTF Challenge Writeups</h3>
+                    <p class="project-description">
+                        Detailed walkthroughs of Capture The Flag challenges from PicoCTF and other competitions. 
+                        Explains vulnerabilities, exploitation techniques, and defensive strategies.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Web Security</span>
+                        <span class="tech-tag">Forensics</span>
+                        <span class="tech-tag">Cryptography</span>
+                        <span class="tech-tag">Reverse Engineering</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Read Writeups Soon →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technical <span>Arsenal</span></h2>
+                <p class="section-subtitle">Tools and technologies I use to build secure systems and code</p>
+            </div>
+
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <span>💻</span> Programming Languages
+                    </h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>C++</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="87"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Python</span>
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="25"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Java</span>
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="45"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>JavaScript</span>
+                                <span class="skill-level">Beginner</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="15"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <span>🖥️</span> Operating Systems
+                    </h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Windows Security</span>
+                                <span class="skill-level">Intermediate-Advanced</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Ubuntu</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="57"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Linux Mint 21</span>
+                                <span class="skill-level">Beginner</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="35"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Windows Server 2019/2022</span>
+                                <span class="skill-level">Beginner</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="30"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <span>🌐</span> Networking & Security
+                    </h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Cisco Packet Tracer</span>
+                                <span class="skill-level">Intermediate-Advanced</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Network Security</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="60"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Vulnerability Assessment</span>
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="45"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Firewall Configuration</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="55"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <span>⚙️</span> Development & Robotics
+                    </h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>FTC Programming</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="65"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Git & GitHub</span>
+                                <span class="skill-level">Beginner-Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="35"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Command Line</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="55"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Web Development</span>
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="35"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VOLUNTEER SECTION ===== -->
+    <section id="volunteer">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Community <span>Impact</span></h2>
+                <p class="section-subtitle">How I Impact the Community</p>
+            </div>
+
+            <div class="volunteer-grid">
+                <div class="volunteer-card">
+                    <div class="volunteer-icon">🎓</div>
+                    <h3 class="volunteer-title">Volunteer</h3>
+                    <p class="volunteer-org">SBPL, Central New Jersey • 2024-Present</p>
+                    <p class="volunteer-description">
+                        I have volunteered for JerseyCares and the South Brunswick TVA before.  
+                        I have additionally done community service for the USNSCC/USNLCC, as a incoming PO3 League Cadet
+                    </p>
+                </div>
+
+                <div class="volunteer-card">
+                    <div class="volunteer-icon">🏫</div>
+                    <h3 class="volunteer-title">VexIQ and FLL consulting</h3>
+                    <p class="volunteer-org">Central NJ • 2026-Present</p>
+                    <p class="volunteer-description">
+                        Assist younger students in software and building VexIQ robots and FLL basics
+                        Teaching coding logic and workshop practices (recording trial and error)
+                    </p>
+                </div>
+
+                <div class="volunteer-card">
+                    <div class="volunteer-icon">💻</div>
+                    <h3 class="volunteer-title">Coding and Cybersecurity Consulting</h3>
+                    <p class="volunteer-org">South Brunswick • 2025-Present</p>
+                    <p class="volunteer-description">
+                        Coding: Providing neccesary materials online, giving consulting and handcrafted guides to start coding in Java and C++. 
+                        Cybersecurity: Teaching and consulting for basic security practice, basic password, account, and audit log management.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== JOURNEY TIMELINE ===== -->
+    <section id="journey">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My <span>Journey</span></h2>
+                <p class="section-subtitle">From a curious beginner to an experienced learner</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Age 12</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Discovered Programming</h3>
+                        <p class="timeline-subtitle">The Beginning</p>
+                        <p class="timeline-description">
+                            Started learning C++ with a push from my brother and fell in love with coding. Built my first programs and discovered 
+                            the power of creating solutions through code.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Age 12</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">CyberPatriot Basic Camp</h3>
+                        <p class="timeline-subtitle">First Cybersecurity Experience</p>
+                        <p class="timeline-description">
+                            Attended CyberPatriot Basic Camp and competed in my first cybersecurity competition. 
+                            Learned system hardening, network security, and defensive cybersecurity fundamentals comprehensively.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Age 13</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Joined FTC Robotics Team</h3>
+                        <p class="timeline-subtitle">Software Development Role</p>
+                        <p class="timeline-description">
+                            Took on the <span class="timeline-highlight">software development position</span> for Team  
+                            Cool Name Pending #30439. Learned Java, team collaboration, and real-world problem solving under pressure.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">3rd Place in New Jersey</h3>
+                        <p class="timeline-subtitle">CyberPatriot Competition</p>
+                        <p class="timeline-description">
+                            Achieved <span class="timeline-highlight">3rd place statewide</span> in the CyberPatriot competition, 
+                            competing against high school teams across New Jersey. Demonstrated advanced skills in system security and incident response.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2026</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">CyberPatriot Advanced Camp</h3>
+                        <p class="timeline-subtitle">Upcoming</p>
+                        <p class="timeline-description">
+                            Selected to attend CyberPatriot Advanced Camp to deepen technical skills and network with 
+                            top competitors and industry professionals. Ready to take my cybersecurity knowledge to the next level.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Now</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Expanding Skills</h3>
+                        <p class="timeline-subtitle">Python, Java & Portfolio Building</p>
+                        <p class="timeline-description">
+                            Currently learning <span class="timeline-highlight">Python, Java, and WebDev</span> to expand my programming toolkit. 
+                            Building security tools, creating educational content, and preparing for future internship opportunities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Let's <span>Connect</span></h2>
+                <p class="section-subtitle">Open to collaboration, mentorship, and learning opportunities</p>
+            </div>
+
+            <div class="contact-container">
+                <p class="contact-text">
+                    I'm always excited to connect with cybersecurity professionals, developers, potential recruiters, and potential mentors. 
+                    Whether you have questions about my projects, want to collaborate, or anything else, feel free to reach out!
+                </p>
+
+                <div class="contact-links">
+                    <a href="https://github.com/advaithbanigandlapati-coder" class="contact-link" target="_blank">
+                        <span class="contact-icon">📁</span>
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-value">@advaithbanigandlapati-coder</span>
+                    </a>
+
+                    <a href="mailto:advaithaltacc@gmail.com" class="contact-link">
+                        <span class="contact-icon">📧</span>
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">advaithaltacc@gmail.com</span>
+                    </a>
+
+                    <a href="#" class="contact-link">
+                        <span class="contact-icon">💼</span>
+                        <span class="contact-label">LinkedIn</span>
+                        <span class="contact-value">too young to have a linkedIn🥲</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>
+                © 2026 Advaith Banigandlapati. Built with passion for cybersecurity and coding. 
+                <a href="https://github.com/yourusername/portfolio" target="_blank">GitHub Source Coming Soon</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== SCROLL PROGRESS BAR =====
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-progress').style.width = scrolled + '%';
+        });
+
+        // ===== SCROLL TO TOP BUTTON =====
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate skill bars
+                    if (entry.target.classList.contains('skill-category')) {
+                        const bars = entry.target.querySelectorAll('.skill-progress');
+                        bars.forEach(bar => {
+                            const width = bar.getAttribute('data-width');
+                            setTimeout(() => {
+                                bar.style.width = width + '%';
+                            }, 200);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Observe project cards
+        document.querySelectorAll('.project-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Observe skill categories
+        document.querySelectorAll('.skill-category').forEach((category, index) => {
+            category.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(category);
+        });
+
+        // Observe volunteer cards
+        document.querySelectorAll('.volunteer-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.15}s`;
+            observer.observe(item);
+        });
+
+        // Observe contact links
+        document.querySelectorAll('.contact-link').forEach((link, index) => {
+            link.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(link);
+        });
+
+        // ===== ACTIVE NAVIGATION HIGHLIGHTING =====
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== ENHANCED HOVER EFFECTS =====
+        document.querySelectorAll('.project-card, .skill-category, .volunteer-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
