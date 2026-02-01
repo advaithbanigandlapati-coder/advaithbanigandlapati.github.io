@@ -131,6 +131,63 @@
             box-shadow: 0 6px 20px var(--glow-green);
         }
 
+        /* ===== SHARE BUTTON ===== */
+        .share-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 5rem;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-secondary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 4px 15px var(--glow-cyan);
+        }
+
+        .share-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .share-button:hover {
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 6px 20px var(--glow-cyan);
+        }
+
+        /* ===== SHARE TOOLTIP ===== */
+        .share-tooltip {
+            position: fixed;
+            bottom: 6rem;
+            right: 5rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10000;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .share-tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ===== ANIMATED GRID BACKGROUND ===== */
         .grid-background {
             position: fixed;
@@ -433,6 +490,19 @@
             color: var(--bg-primary);
         }
 
+        .btn-security-guide {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px var(--glow-green);
+            font-size: 1.1rem;
+            padding: 1.2rem 2.5rem;
+        }
+
+        .btn-security-guide:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 40px var(--glow-green);
+        }
+
         /* ===== TERMINAL BOX ===== */
         .terminal {
             background: var(--bg-card);
@@ -582,6 +652,133 @@
         .section-subtitle {
             color: var(--text-secondary);
             font-size: 1.1rem;
+        }
+
+        /* ===== SECURITY GUIDE SHOWCASE SECTION ===== */
+        .security-guide-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-guide-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .showcase-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .showcase-icon {
+            font-size: 4rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .showcase-title {
+            font-size: 2.5rem;
+            font-family: 'Space Mono', monospace;
+            line-height: 1.2;
+        }
+
+        .showcase-title span {
+            color: var(--accent-primary);
+        }
+
+        .showcase-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .showcase-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .feature-icon {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .showcase-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .preview-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .preview-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.1);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .preview-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .preview-card h4 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         /* ===== PROJECTS GRID ===== */
@@ -1129,6 +1326,15 @@
                 font-size: 3rem;
             }
 
+            .security-guide-showcase {
+                grid-template-columns: 1fr;
+                padding: 3rem 2rem;
+            }
+
+            .showcase-features {
+                grid-template-columns: 1fr;
+            }
+
             /* Fix timeline for tablet */
             .timeline::before {
                 left: 20px;
@@ -1205,6 +1411,16 @@
             .logo span {
                 display: inline;
             }
+
+            .share-button {
+                right: 1rem;
+                bottom: 6rem;
+            }
+
+            .share-tooltip {
+                right: 1rem;
+                bottom: 10rem;
+            }
         }
 
         @media (max-width: 640px) {
@@ -1214,6 +1430,14 @@
 
             .section-title {
                 font-size: 1.8rem;
+            }
+
+            .showcase-title {
+                font-size: 1.8rem;
+            }
+
+            .showcase-description {
+                font-size: 1rem;
             }
 
             .cta-buttons {
@@ -1226,6 +1450,11 @@
                 text-align: center;
                 padding: 0.8rem 1.5rem;
                 font-size: 0.85rem;
+            }
+
+            .btn-security-guide {
+                padding: 1rem 2rem;
+                font-size: 1rem;
             }
 
             .nav-links {
@@ -1255,6 +1484,13 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
+            }
+
+            .share-button {
+                bottom: 5rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
             }
 
             .section-header {
@@ -1309,6 +1545,10 @@
                 padding: 3rem 0;
             }
 
+            .security-guide-showcase {
+                padding: 2rem 1.5rem;
+            }
+
             .project-card,
             .volunteer-card {
                 padding: 1.5rem;
@@ -1336,6 +1576,14 @@
 
             .section-title {
                 font-size: 1.5rem;
+            }
+
+            .showcase-title {
+                font-size: 1.5rem;
+            }
+
+            .showcase-icon {
+                font-size: 3rem;
             }
 
             .achievement-item {
@@ -1387,6 +1635,14 @@
                 font-size: 1.2rem;
                 margin-bottom: 1rem;
             }
+
+            .preview-card {
+                padding: 1rem;
+            }
+
+            .preview-number {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -1396,6 +1652,10 @@
 
     <!-- Scroll to top button -->
     <button class="scroll-to-top" aria-label="Scroll to top">↑</button>
+
+    <!-- Share button -->
+    <button class="share-button" aria-label="Share this portfolio">📤</button>
+    <div class="share-tooltip">Link copied!</div>
 
     <!-- Background Effects -->
     <div class="grid-background"></div>
@@ -1411,7 +1671,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#volunteer">Volunteer</a></li>
                 <li><a href="#journey">Journey</a></li>
-                <li><a href="security-guide.html">Security Guide</a></li>
+                <li><a href="#security-guide-cta">Security Guide</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -1957,6 +2217,76 @@
         </div>
     </section>
 
+    <!-- ===== SECURITY GUIDE CTA SECTION ===== -->
+    <section id="security-guide-cta">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Security <span>Resources</span></h2>
+                <p class="section-subtitle">Learn from my competition experience</p>
+            </div>
+
+            <div class="security-guide-showcase">
+                <div class="showcase-content">
+                    <div class="showcase-icon">🛡️</div>
+                    <h2 class="showcase-title">
+                        Secure Your System in <span>45 Minutes</span>
+                    </h2>
+                    <p class="showcase-description">
+                        Learn the 5 essential security techniques I used to place 3rd in the New Jersey CyberPatriot competition. 
+                        Step-by-step guides for BitLocker encryption, audit logs, password policies, and more.
+                    </p>
+                    <div class="showcase-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Beginner-Friendly</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Competition-Tested</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Windows, Linux & macOS</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Troubleshooting Included</span>
+                        </div>
+                    </div>
+                    <a href="security-guide.html" class="btn btn-security-guide">
+                        📖 View Security Guide
+                    </a>
+                </div>
+                <div class="showcase-preview">
+                    <div class="preview-card">
+                        <div class="preview-header">
+                            <span class="preview-number">01</span>
+                            <span class="preview-badge">Beginner</span>
+                        </div>
+                        <h4>BitLocker Encryption</h4>
+                        <p>Protect your data from physical theft</p>
+                    </div>
+                    <div class="preview-card">
+                        <div class="preview-header">
+                            <span class="preview-number">02</span>
+                            <span class="preview-badge">Intermediate</span>
+                        </div>
+                        <h4>Audit Logs</h4>
+                        <p>Monitor system security events</p>
+                    </div>
+                    <div class="preview-card">
+                        <div class="preview-header">
+                            <span class="preview-number">03</span>
+                            <span class="preview-badge">Beginner</span>
+                        </div>
+                        <h4>Password Policies</h4>
+                        <p>Enforce strong password requirements</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== CONTACT SECTION ===== -->
     <section id="contact">
         <div class="container">
@@ -2010,6 +2340,38 @@
         let lastScrollTop = 0;
         let sectionsViewed = new Set();
 
+        // ===== SHARE BUTTON FUNCTIONALITY =====
+        const shareButton = document.querySelector('.share-button');
+        const shareTooltip = document.querySelector('.share-tooltip');
+
+        shareButton.addEventListener('click', async () => {
+            const url = window.location.href;
+            
+            try {
+                // Try to use the Web Share API if available (mobile)
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'Advaith Banigandlapati - Cybersecurity Portfolio',
+                        text: 'Check out my cybersecurity portfolio!',
+                        url: url
+                    });
+                } else {
+                    // Fallback to copying to clipboard
+                    await navigator.clipboard.writeText(url);
+                    
+                    // Show tooltip
+                    shareTooltip.classList.add('show');
+                    
+                    // Hide tooltip after 2 seconds
+                    setTimeout(() => {
+                        shareTooltip.classList.remove('show');
+                    }, 2000);
+                }
+            } catch (err) {
+                console.log('Error sharing:', err);
+            }
+        });
+
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -2034,14 +2396,16 @@
             document.querySelector('.scroll-progress').style.width = scrolled + '%';
         });
 
-        // ===== SCROLL TO TOP BUTTON =====
+        // ===== SCROLL TO TOP BUTTON & SHARE BUTTON =====
         const scrollToTopBtn = document.querySelector('.scroll-to-top');
         
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
                 scrollToTopBtn.classList.add('visible');
+                shareButton.classList.add('visible');
             } else {
                 scrollToTopBtn.classList.remove('visible');
+                shareButton.classList.remove('visible');
             }
         });
 
